@@ -1,0 +1,98 @@
+<div class="user-background">
+    <div class="user-container">
+        <app-top-bar [user]="currentUser"></app-top-bar>
+
+        <div class="dashboard-container">
+            <div class="left-panel">
+                <h2>Witaj, {{ currentUser?.name }}!</h2>
+                <p class="panel-title">Panel klienta</p>
+            </div>
+
+            <div class="right-panel">
+                <div class="membership-top-card">
+                <mat-icon class="membership-icon">credit_card</mat-icon>
+                <span class="membership-name">Karnet Premium</span>
+                </div>
+
+            </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="info-cards">
+            <mat-card class="info-card">
+                <div class="card-left">
+                    <p class="card-title">Aktywny karnet</p>
+                    <p class="card-name">Karnet Premium</p>
+                    <p class="card-date">Aktywny do: 2025-12-31</p>
+                </div>
+                <div class="card-right">
+                    <mat-icon class="card-icon">credit_card</mat-icon>
+                </div>
+            </mat-card>
+
+            <mat-card class="info-card">
+                <div class="card-left">
+                    <p class="card-title">Zapisane treningi</p>
+                    <p class="card-number">12</p>
+                    <p class="card-next">Nadchodzący trening: Kardio</p>
+                </div>
+                <div class="card-right">
+                    <mat-icon class="card-icon">fitness_center</mat-icon>
+                </div>
+            </mat-card>
+
+            <mat-card class="info-card">
+                <div class="card-left">
+                    <p class="card-title">Dostępne treningi</p>
+                    <p class="card-number">24</p>
+                    <p class="card-note">Do wyboru</p>
+                </div>
+                <div class="card-right">
+                    <mat-icon class="card-icon">calendar_today</mat-icon>
+                </div>
+            </mat-card>
+        </div>
+
+        <div class="user-tabs-container">
+            <mat-tab-group>
+                <mat-tab label="Karnety">
+                    <div class="tab-content">
+
+                        <div class="membership-cards-container">
+                            <mat-card class="membership-card" *ngFor="let membership of memberships">
+                                <div>
+                                    <h3 class="card-title">{{ membership.name }}</h3>
+                                <p class="card-description">{{ membership.description }}</p>
+                                <p class="card-price">{{ membership.amount }} PLN</p>
+                                <ul class="card-features">
+                                    <li *ngFor="let detail of membership.details">
+                                        <mat-icon class="feature-icon">check_circle</mat-icon> {{ detail.description }}
+                                    </li>
+                                </ul>
+                                </div>
+                                <div style="display: flex; width: 100%; justify-content: center; margin-top: auto;">
+                                    <button mat-raised-button color="primary" class="buy-button">Kup karnet</button>
+                                </div>
+                            </mat-card>
+                        </div>
+
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Dostępne treningi">
+                    <div class="tab-content">
+                        <p>Lista dostępnych treningów pojawi się tutaj.</p>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Moje treningi">
+                    <div class="tab-content">
+                        <p>Twoje zapisane treningi pojawią się tutaj.</p>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+    </div>
+</div>

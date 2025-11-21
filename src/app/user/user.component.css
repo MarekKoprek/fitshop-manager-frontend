@@ -1,0 +1,186 @@
+.user-background {
+    min-height: 100vh;
+    width: 100vw;
+    background-image:
+        linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+        url('/assets/background/login.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.user-container {
+    min-height: 95%;
+    width: 90%;
+    background-color: white;
+    border-radius: 16px;
+    font-family: sans-serif;
+}
+
+.dashboard-container {
+    display: flex;
+    gap: 24px;
+    padding-top: 30px;
+    padding-left: 5%;
+    padding-right: 5%;
+    font-family: Roboto, sans-serif;
+    justify-content: space-between;
+}
+
+.left-panel h2 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+}
+
+.panel-title {
+    font-size: 16px;
+    color: #555;
+}
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.membership-top-card {
+    background-color: #000;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border-radius: 12px;
+    gap: 12px;
+}
+
+.membership-icon {
+    font-size: 36px;
+}
+
+.membership-name {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.info-cards {
+    width: 100%;
+    margin-top: 50px;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    gap: 16px;
+}
+
+.info-card {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: space-between;
+    flex-direction: row;
+    padding: 16px;
+    border: solid darkgray 1px;
+}
+
+.card-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    font-weight: 500;
+    margin: 0 0 4px 0;
+}
+
+.card-name, .card-number, .card-note, .card-date, .card-next {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.card-right {
+    display: flex;
+    align-items: flex-start;
+}
+
+.card-icon {
+    font-size: 24px;
+    color: black;
+}
+
+.tab-content {
+    padding: 16px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    min-height: 50vh;
+}
+
+.user-tabs-container {
+    margin-top: 24px;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.membership-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1%;
+    row-gap: 16px;
+    justify-content: flex-start;
+}
+
+.membership-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: space-between;
+    padding: 16px;
+    border-radius: 12px;
+    width: 49%;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+}
+
+.card-description {
+    font-size: 14px;
+    color: #555;
+    margin: 0 0 8px 0;
+}
+
+.card-price {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 12px 0;
+}
+
+.card-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 12px 0;
+}
+
+.card-features li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.feature-icon {
+    color: green;
+    margin-right: 6px;
+}
+
+.buy-button {
+    align-self: flex-center;
+    justify-self: end;
+    width: 90%;
+}

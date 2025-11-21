@@ -1,0 +1,52 @@
+.login-container {
+    height: 100vh;
+    width: 100vw;
+    background-image:
+        linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+        url('/assets/background/login.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.login-card h2 {
+    margin-bottom: 8px;
+}
+
+.login-card p {
+    margin-bottom: 24px;
+    color: #555;
+}
+
+.full-width {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.login-button {
+    background-color: black !important;
+    color: white !important;
+    border-radius: 8px !important;
+}
+
+.register-text {
+    margin-top: 16px;
+}
+
+.register-text a {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+}

@@ -1,0 +1,20 @@
+<div class="header-bar">
+  <div class="left-side">
+    <div class="logo-icon"></div>
+    <div class="logo-text">
+      <span class="main-title">FitClub Manager</span>
+      <span class="sub-title">System zarządzania klubem fitness</span>
+    </div>
+  </div>
+  <div class="right-side">
+    <mat-icon class="user-icon">account_circle</mat-icon>
+    <div class="user-info">
+      <span class="user-name">{{ user?.name }}</span>
+      <span class="user-role">{{ translateRole(user?.role) }}</span>
+    </div>
+    <button mat-button color="warn" class="logout-button" (click)="logout()">
+        <mat-icon>logout</mat-icon>Wyloguj
+    </button>
+  </div>
+</div>
+<mat-divider></mat-divider>
