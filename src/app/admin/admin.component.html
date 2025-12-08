@@ -1,0 +1,198 @@
+<div class="user-background">
+    <div class="user-container">
+        <app-top-bar [user]="currentUser"></app-top-bar>
+
+        <div class="dashboard-container">
+            <div class="left-panel">
+                <h2>Witaj, {{ currentUser?.name }}!</h2>
+                <p class="panel-title">Panel administratora</p>
+            </div>
+
+            <div class="right-panel">
+                <button mat-flat-button class="membership-top-card" (click)="onAddElement()">
+                    <mat-icon class="membership-icon">add_circle</mat-icon>
+                    <span class="membership-name">Dodaj element</span>
+                </button>
+
+            </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <div class="user-tabs-container">
+            <mat-tab-group (selectedTabChange)="onTabChange($event)">
+                <mat-tab label="Karnety">
+                    <div class="tab-content">
+
+                        <div class="membership-cards-container">
+                            <mat-card class="membership-card" *ngFor="let membership of memberships">
+                                <div>
+                                    <h3 class="card-title">{{ membership.name }}</h3>
+                                <p class="card-description">{{ membership.description }}</p>
+                                <p class="card-price">{{ membership.amount }} PLN</p>
+                                <ul class="card-features">
+                                    <li *ngFor="let detail of membership.details">
+                                        <mat-icon class="feature-icon">check_circle</mat-icon> {{ detail.description }}
+                                    </li>
+                                </ul>
+                                </div>
+                                <div style="display: flex; height: 100%; width: 100%; align-items: end;">
+                                    <div style="display: flex; width: 50%; justify-content: center; margin-top: auto;">
+                                        <button mat-raised-button color="primary" class="buy-button" (click)="onSubscriptionDialog(membership)">Edytuj karnet</button>
+                                    </div>
+                                    <div style="display: flex; width: 50%; justify-content: center; margin-top: auto;" (click)="onDeleteMembership(membership.id)">
+                                        <button mat-raised-button color="warn" class="buy-button">Usuń karnet</button>
+                                    </div>
+                                </div>
+                            </mat-card>
+                        </div>
+
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Użytkownicy">
+                    <div class="tab-content">
+                        <div class="data-table-container">
+
+                            <div class="table-filters">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput [(ngModel)]="userFilter.email">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Name</mat-label>
+                                    <input matInput [(ngModel)]="userFilter.name">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Role</mat-label>
+                                    <mat-select [(ngModel)]="userFilter.role">
+                                        <mat-option value="">Wszystkie</mat-option>
+                                        <mat-option value="ADMIN">ADMIN</mat-option>
+                                        <mat-option value="USER">USER</mat-option>
+                                        <mat-option value="TRAINER">TRAINER</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                                <button mat-raised-button color="primary" (click)="applyUserFilter()" style="margin-top: 10px;">Search</button>
+                            </div>
+
+                            <table mat-table [dataSource]="users" class="mat-elevation-z8">
+
+                                <ng-container matColumnDef="email">
+                                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                                    <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                                    <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="role">
+                                    <th mat-header-cell *matHeaderCellDef>Role</th>
+                                    <td mat-cell *matCellDef="let user">{{ user.role }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                    <td mat-cell *matCellDef="let user">
+                                        <button mat-icon-button color="warn" (click)="deleteUser()" *ngIf="user.role !== 'ADMIN'">
+                                            <mat-icon>cancel</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="primary" (click)="editUser()" *ngIf="user.role !== 'ADMIN'">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedUserColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedUserColumns;"></tr>
+                            </table>
+
+                            <mat-paginator #userPaginator [length]="totalUsers"
+                                            [pageSize]="userPageSize"
+                                            [pageSizeOptions]="[5, 10, 25, 50]"
+                                            (page)="onUserPageChange($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Treningi">
+                    <div class="tab-content">
+                        <div class="data-table-container">
+
+                            <div class="table-filters">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Title</mat-label>
+                                    <input matInput [(ngModel)]="trainingFilter.title">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Trainer</mat-label>
+                                    <input matInput [(ngModel)]="trainingFilter.trainer">
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline" style="margin-left: 8px; width: 150px;">
+                                    <mat-label>Date</mat-label>
+                                    <input matInput [matDatepicker]="filterDatePicker" [(ngModel)]="trainingFilter.date">
+                                    <mat-datepicker-toggle matSuffix [for]="filterDatePicker"></mat-datepicker-toggle>
+                                    <mat-datepicker #filterDatePicker></mat-datepicker>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Limit</mat-label>
+                                    <input matInput [(ngModel)]="trainingFilter.limit">
+                                </mat-form-field>
+
+                                <button mat-raised-button color="primary" (click)="applyTrainingFilter()" style="margin-top: 10px;">Search</button>
+                            </div>
+
+                            <table mat-table [dataSource]="trainings" class="mat-elevation-z8">
+
+                                <ng-container matColumnDef="title">
+                                    <th mat-header-cell *matHeaderCellDef>Title</th>
+                                    <td mat-cell *matCellDef="let training">{{ training.title }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="trainer">
+                                    <th mat-header-cell *matHeaderCellDef>Trainer</th>
+                                    <td mat-cell *matCellDef="let training">{{ training.trainer.email }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="date">
+                                    <th mat-header-cell *matHeaderCellDef>Date</th>
+                                    <td mat-cell *matCellDef="let training">{{ training.startDate | date:'yyyy-MM-dd HH:mm' }}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="actions">
+                                    <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                    <td mat-cell *matCellDef="let training">
+                                        <button mat-icon-button color="warn" (click)="deleteUser()">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                        <button mat-icon-button color="primary" (click)="editUser()">
+                                            <mat-icon>edit</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedTrainingColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedTrainingColumns;"></tr>
+                            </table>
+
+                            <mat-paginator #userPaginator [length]="totalTrainings"
+                                            [pageSize]="trainingPageSize"
+                                            [pageSizeOptions]="[5, 10, 25, 50]"
+                                            (page)="onTrainingPageChange($event)">
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </div>
+
+    </div>
+</div>

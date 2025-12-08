@@ -4,6 +4,7 @@ import { RoleGuard } from './guard/role.guard';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -18,19 +19,19 @@ const routes: Routes = [
     path: 'user',
     component: UserComponent,
     // canActivate: [RoleGuard],
-    // data: { roles: ['User', 'Admin'] }
+    // data: { roles: ['USER', 'ADMIN'] }
   },
   {
     path: 'trainer',
-    component: LoginComponent ,
+    component: LoginComponent,
     // canActivate: [RoleGuard],
-    // data: { roles: ['Trainer', 'Admin'] }
+    // data: { roles: ['TRAINER', 'ADMIN'] }
   },
   {
     path: 'admin',
-    component: LoginComponent ,
+    component: AdminComponent,
     // canActivate: [RoleGuard],
-    // data: { roles: ['Admin'] }
+    // data: { roles: ['ADMIN'] }
   },
   {
     path: 'unauthorized',
@@ -38,12 +39,12 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'user',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'user'
+    redirectTo: 'login'
   }
 ];
 

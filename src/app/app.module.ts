@@ -10,13 +10,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginComponent } from './login/login.component';
 import { MatInputModule } from '@angular/material/input';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './user/user.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import { RegisterComponent } from './register/register.component';
+import { AdminComponent } from './admin/admin.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AddSubscriptionComponent } from './admin/add-subscription-component/add-subscription.component';
+import { ConfirmComponent } from './confirm-component/confirm.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +36,9 @@ import { RegisterComponent } from './register/register.component';
     UserComponent,
     TopBarComponent,
     RegisterComponent,
+    AdminComponent,
+    AddSubscriptionComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +53,14 @@ import { RegisterComponent } from './register/register.component';
     MatDividerModule,
     MatCardModule,
     MatTabsModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    DatePipe,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -14,6 +14,8 @@ export class TopBarComponent {
 
   logout() {
     console.log("Wylogowano");
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     this.router.navigate(['/login']);
   }
 
@@ -23,7 +25,7 @@ export class TopBarComponent {
         return 'Klient';
       case 'TRAINER':
         return 'Trener';
-      case 'ADMINISTAROR':
+      case 'ADMIN':
         return 'Admin';
       default:
         return role;

@@ -1,0 +1,47 @@
+<div class="dialog-container">
+    <h2 mat-dialog-title>Karnet</h2>
+
+    <form [formGroup]="form" class="dialog-form">
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nazwa</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Opis</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Cena</mat-label>
+        <input matInput formControlName="amount" type="number">
+    </mat-form-field>
+
+    <div class="features-header">
+        <h3>Cechy karnetu</h3>
+        <button mat-stroked-button color="primary" (click)="addFeature()" type="button">
+        Dodaj cechę
+        </button>
+    </div>
+
+    <div formArrayName="features" class="features-list">
+        <div *ngFor="let feature of features.controls; let i = index" [formGroupName]="i" class="feature-item">
+        <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Opis cechy</mat-label>
+            <input matInput formControlName="description">
+        </mat-form-field>
+
+        <button mat-icon-button color="warn" (click)="removeFeature(i)" type="button">
+            <mat-icon>delete</mat-icon>
+        </button>
+        </div>
+    </div>
+
+    </form>
+
+    <mat-dialog-actions align="center">
+        <button mat-flat-button color="primary" (click)="save()">Zapisz</button>
+        <button mat-flat-button color="warn" (click)="close()">Zamknij</button>
+    </mat-dialog-actions>
+</div>

@@ -49,13 +49,14 @@
 }
 
 .membership-top-card {
-    background-color: #000;
-    color: white;
+    background-color: #34960d !important;
+    color: white !important;
     display: flex;
     align-items: center;
     padding: 16px;
     border-radius: 12px;
     gap: 12px;
+    height: fit-content;
 }
 
 .membership-icon {
