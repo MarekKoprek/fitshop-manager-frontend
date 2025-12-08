@@ -18,7 +18,7 @@ export class RegisterComponent {
 
   register() {
     console.log("Rejestracja:", this.firstName, this.lastName, this.email);
-    this.apiService.post('register', {
+    this.apiService.postWithoutHeaders('register', {
         login: this.email,
         email: this.email, 
         password: this.password, 

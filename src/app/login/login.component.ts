@@ -14,7 +14,7 @@ export class LoginComponent {
   constructor(private api: ApiService, private router: Router) {}
 
   login() {
-    this.api.put('login', { login: this.email, password: this.password })
+    this.api.putWithoutHeaders('login', { login: this.email, password: this.password })
       .subscribe({
         next: (res) => {
           console.log('Zalogowano!', res);

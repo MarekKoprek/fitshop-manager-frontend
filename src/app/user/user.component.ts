@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class UserComponent {
   memberships: any[] = [];
+  availableTrainings: any[] = [];
+  participatingTrainings: any[] = [];
 
   currentUser: any = null;
 
@@ -33,6 +35,26 @@ export class UserComponent {
       },
       error: (err) => {
         console.error('Błąd pobierania karnetów', err);
+      }
+    });
+
+    this.apiService.get<any>('get/trainings/2025/11').subscribe({
+      next: (res) => {
+        console.log('Dostępne treningi 11-2025:', res);
+        this.availableTrainings = res;
+      },
+      error: (err) => {
+        console.error('Błąd pobierania dostępnych treningów', err);
+      }
+    });
+
+    this.apiService.get<any>('get/own/trainings').subscribe({
+      next: (res) => {
+        console.log('Treningi klienta:', res);
+        this.participatingTrainings = res;
+      },
+      error: (err) => {
+        console.error('Błąd pobierania treningów klienta', err);
       }
     });
   }
