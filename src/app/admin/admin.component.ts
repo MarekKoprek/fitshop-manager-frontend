@@ -8,6 +8,8 @@ import { ConfirmComponent } from '../confirm-component/confirm.component';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
+import { AddUserComponent } from './add-user-component/add-user.component';
+import { AddTrainingComponent } from './add-training-component/add-training.component';
 
 @Component({
   selector: 'app-user',
@@ -37,7 +39,7 @@ export class AdminComponent {
   };
 
   displayedUserColumns: string[] = ['email', 'name', 'role', 'actions'];
-  displayedTrainingColumns: string[] = ['title', 'trainer', 'date', 'actions'];
+  displayedTrainingColumns: string[] = ['title', 'trainer', 'date', 'limit', 'actions'];
 
   users = new MatTableDataSource<any>([]);
   trainings = new MatTableDataSource<any>([]);
@@ -160,12 +162,6 @@ export class AdminComponent {
     this.getTrainings();
   }
 
-  editUser() {
-  }
-
-  deleteUser() {
-  }
-
   translateRole(role: string): string {
     switch (role) {
       case 'USER':
@@ -204,6 +200,10 @@ export class AdminComponent {
   onAddElement() {
     if (this.selectedTabLabel === 'Karnety') {
       this.onSubscriptionDialog(null);
+    } else if (this.selectedTabLabel === 'Użytkownicy') {
+      this.onUserDialog(null);
+    } else if (this.selectedTabLabel === 'Treningi') {
+      this.onTrainingDialog(null);
     }
   }
 
@@ -222,6 +222,75 @@ export class AdminComponent {
           },
           error: (err) => {
             console.error('Błąd usuwania karnetu', err);
+          }
+        });
+      }
+    });
+  }
+
+  onBlockUser(userId: number) {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '35vw',
+      data: { message: 'Czy na pewno chcesz zablokować tego użytkownika?' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiService.put<any>(`block/user/${userId}`, null).subscribe({
+          next: (res) => {
+            console.log('Użytkownik zablokowany:', res);
+            this.getUsers();
+          },
+          error: (err) => {
+            console.error('Błąd blokowania użytkownika', err);
+          }
+        }); 
+      }
+    });
+  }
+
+  onUserDialog(user: any) {
+    const dialogRef = this.dialog.open(AddUserComponent, {
+      width: '40vw',
+      maxHeight: '80vh',
+      data: user
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog zamknięty z wynikiem:', result);
+        this.getUsers();
+      }
+    });
+  }
+
+  onTrainingDialog(training: any) {
+    const dialogRef = this.dialog.open(AddTrainingComponent, {
+      width: '40vw',
+      maxHeight: '80vh',
+      data: training
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog zamknięty z wynikiem:', result);
+        this.getTrainings();
+      }
+    });
+  }
+
+  onDeleteTraining(trainingId: number) {
+    const dialogRef = this.dialog.open(ConfirmComponent, {
+      width: '35vw',
+      data: { message: 'Czy na pewno chcesz usunąć ten trening?' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiService.post<any>(`delete/training/${trainingId}`, null).subscribe({
+          next: (res) => {
+            console.log('Trening usunięty:', res);
+            this.getTrainings();
+          },
+          error: (err) => {
+            console.error('Błąd usuwania treningu', err);
           }
         });
       }

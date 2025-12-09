@@ -41,7 +41,7 @@
     </form>
 
     <mat-dialog-actions align="center">
-        <button mat-flat-button color="primary" (click)="save()">Zapisz</button>
+        <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid">Zapisz</button>
         <button mat-flat-button color="warn" (click)="close()">Zamknij</button>
     </mat-dialog-actions>
 </div>

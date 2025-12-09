@@ -27,6 +27,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { DatePipe } from '@angular/common';
+import { AddUserComponent } from './admin/add-user-component/add-user.component';
+import { AddTrainingComponent } from './admin/add-training-component/add-training.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import { DatePipe } from '@angular/common';
     AdminComponent,
     AddSubscriptionComponent,
     ConfirmComponent,
+    AddUserComponent,
+    AddTrainingComponent,
   ],
   imports: [
     BrowserModule,

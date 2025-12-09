@@ -1,0 +1,31 @@
+<div class="dialog-container">
+    <h2 mat-dialog-title>Użytkownik</h2>
+
+    <form [formGroup]="form" class="dialog-form">
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nazwa</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Rola</mat-label>
+        <mat-select formControlName="role">
+            <mat-option value="USER">Klient</mat-option>
+            <mat-option value="TRAINER">Trener</mat-option>
+            <mat-option value="ADMIN">Admin</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    </form>
+
+    <mat-dialog-actions align="center">
+        <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid">Zapisz</button>
+        <button mat-flat-button color="warn" (click)="close()">Zamknij</button>
+    </mat-dialog-actions>
+</div>

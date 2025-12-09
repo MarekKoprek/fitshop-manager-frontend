@@ -56,6 +56,11 @@
     padding: 16px;
     border-radius: 12px;
     gap: 12px;
+    cursor: pointer;
+}
+
+.membership-top-card:hover {
+    background-color: #222;
 }
 
 .membership-icon {
@@ -84,6 +89,22 @@
     flex-direction: row;
     padding: 16px;
     border: solid darkgray 1px;
+}
+
+.info-card-clickable {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: space-between;
+    flex-direction: row;
+    padding: 16px;
+    border: solid darkgray 1px;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+.info-card-clickable:hover {
+    background-color: #ebe6e6 !important;
 }
 
 .card-left {
@@ -183,4 +204,64 @@
     align-self: flex-center;
     justify-self: end;
     width: 90%;
+}
+
+.available-trainings-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.training-item {
+    background-color: white;
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.training-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.training-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0 0 4px 0;
+}
+
+.training-details {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+}
+
+.join-button {
+    padding: 8px 16px;
+}
+
+.date-table-container {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    margin-bottom: 16px;
+    justify-content: center;
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+}
+
+.date-container {
+    width: 25%;
+}
+
+.available-trainings-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }

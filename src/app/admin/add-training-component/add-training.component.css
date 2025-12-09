@@ -1,0 +1,41 @@
+.dialog-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.features-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature-item {
+  display: flex;
+  gap: 10px;
+}
+
+.dialog-container {
+  padding: 24px;
+}
+
+.date-field {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+.date-time-input {
+  flex: 1;
+}

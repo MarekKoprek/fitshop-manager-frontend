@@ -20,7 +20,7 @@ export class AddSubscriptionComponent {
     this.form = this.fb.group({
       name: [data != null ? data.name : '', Validators.required],
       description: [data != null ? data.description : '', Validators.required],
-      amount: [data != null ? data.amount : 0, Validators.required],
+      amount: [data != null ? data.amount : 0, [Validators.required, Validators.min(1)]],
       features: this.fb.array(data != null ? data.details.map((feature: any) => this.fb.group({
         description: [feature.description]
       })) : [])

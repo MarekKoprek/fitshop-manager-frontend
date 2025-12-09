@@ -11,7 +11,7 @@
             <div class="right-panel">
                 <div class="membership-top-card">
                 <mat-icon class="membership-icon">credit_card</mat-icon>
-                <span class="membership-name">Karnet Premium</span>
+                <span class="membership-name">{{ currentUser?.activeSubscription != null ? currentUser?.activeSubscription.name : "Brak karnetu" }}</span>
                 </div>
 
             </div>
@@ -20,11 +20,11 @@
         <mat-divider></mat-divider>
 
         <div class="info-cards">
-            <mat-card class="info-card">
+            <mat-card class="info-card-clickable" (click)="onCurrentSubscriptionClick()">
                 <div class="card-left">
                     <p class="card-title">Aktywny karnet</p>
-                    <p class="card-name">Karnet Premium</p>
-                    <p class="card-date">Aktywny do: 2025-12-31</p>
+                    <p class="card-name">{{ currentUser?.activeSubscription != null ? currentUser?.activeSubscription.name : "Brak karnetu" }}</p>
+                    <p class="card-date">{{ currentUser?.subscriptionExpireDate ? "Aktywny do: " + translateDate(currentUser?.subscriptionExpireDate) : "" }}</p>
                 </div>
                 <div class="card-right">
                     <mat-icon class="card-icon">credit_card</mat-icon>
@@ -33,23 +33,23 @@
 
             <mat-card class="info-card">
                 <div class="card-left">
-                    <p class="card-title">Zapisane treningi</p>
-                    <p class="card-number">12</p>
-                    <p class="card-next">Nadchodzący trening: Kardio</p>
+                    <p class="card-title">Dostępne treningi</p>
+                    <p class="card-number">{{ availableTrainings.length }}</p>
+                    <p class="card-note">W wybranym miesiącu</p>
                 </div>
                 <div class="card-right">
-                    <mat-icon class="card-icon">fitness_center</mat-icon>
+                    <mat-icon class="card-icon">calendar_today</mat-icon>
                 </div>
             </mat-card>
 
             <mat-card class="info-card">
                 <div class="card-left">
-                    <p class="card-title">Dostępne treningi</p>
-                    <p class="card-number">24</p>
-                    <p class="card-note">Do wyboru</p>
+                    <p class="card-title">Zapisane treningi</p>
+                    <p class="card-number">{{ participatingTrainings.length }}</p>
+                    <p class="card-next">Nadchodzący trening: {{ closestTrainingTitle }}</p>
                 </div>
                 <div class="card-right">
-                    <mat-icon class="card-icon">calendar_today</mat-icon>
+                    <mat-icon class="card-icon">fitness_center</mat-icon>
                 </div>
             </mat-card>
         </div>
@@ -82,15 +82,84 @@
 
                 <mat-tab label="Dostępne treningi">
                     <div class="tab-content">
-                        <div *ngFor="let training of availableTrainings">
-                            <p>{{ training.title }}</p>
+                        <div class="available-trainings-container">
+                            <div class="date-table-container">
+                                <button mat-icon-button (click)="decreaseMonth()"><mat-icon>arrow_left</mat-icon></button>
+                                <div class="date-container">
+                                    {{ translateMonth(currentMonth) }} {{ currentYear }}
+                                </div>
+                                <button mat-icon-button (click)="increaseMonth()"><mat-icon>arrow_right</mat-icon></button>
+                            </div>
+                            <div class="available-trainings-list">
+                                <h1 *ngIf="availableTrainings.length == 0" style="color: gray; text-align: center;">Brak treningów</h1>
+                                <mat-card class="training-item" *ngFor="let training of availableTrainings">
+                                    <div class="training-info">
+                                        <p class="training-details">
+                                            <strong>Start:</strong> {{ translateDate(training.startDate) }}
+                                        </p>
+
+                                        <p class="training-details">
+                                            <strong>Koniec:</strong> {{ translateDate(training.endDate) }}
+                                        </p>
+
+                                        <p class="training-details">
+                                            <strong>Trener:</strong> {{ training.trainer.name }}
+                                        </p>
+
+                                        <p class="training-details">
+                                            <strong>Uczestnicy:</strong> {{ training.participants.length }} / {{ training.limit }}
+                                        </p>
+                                    </div>
+
+                                    <div class="training-info">
+                                        <h2 class="training-name">{{ training.title }}</h2>
+
+                                        <p class="training-details" style="text-align: center;">{{ training.description }}</p>
+                                    </div>
+
+                                    <button mat-raised-button color="primary" class="join-button" [disabled]="training.participates || training.participants.length >= training.limit" (click)="onParticipate(training.id)">
+                                        Zapisz się
+                                    </button>
+                                </mat-card>
+                            </div>
                         </div>
                     </div>
                 </mat-tab>
 
                 <mat-tab label="Moje treningi">
                     <div class="tab-content">
-                        <p>Twoje zapisane treningi pojawią się tutaj.</p>
+                        <div class="available-trainings-list">
+                            <h1 *ngIf="participatingTrainings.length == 0" style="color: gray; text-align: center;">Brak treningów</h1>
+                            <mat-card class="training-item" *ngFor="let training of participatingTrainings">
+                                <div class="training-info">
+                                    <p class="training-details">
+                                        <strong>Start:</strong> {{ translateDate(training.startDate) }}
+                                    </p>
+
+                                    <p class="training-details">
+                                        <strong>Koniec:</strong> {{ translateDate(training.endDate) }}
+                                    </p>
+
+                                    <p class="training-details">
+                                        <strong>Trener:</strong> {{ training.trainer.name }}
+                                    </p>
+
+                                    <p class="training-details">
+                                        <strong>Uczestnicy:</strong> {{ training.participants.length }} / {{ training.limit }}
+                                    </p>
+                                </div>
+
+                                <div class="training-info">
+                                    <h2 class="training-name">{{ training.title }}</h2>
+
+                                    <p class="training-details" style="text-align: center;">{{ training.description }}</p>
+                                </div>
+
+                                <button mat-raised-button color="primary" class="join-button" (click)="onParticipateRemove(training.id)">
+                                    Wypisz się
+                                </button>
+                            </mat-card>
+                        </div>
                     </div>
                 </mat-tab>
             </mat-tab-group>
