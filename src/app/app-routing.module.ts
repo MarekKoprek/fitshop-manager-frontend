@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
 import { AdminComponent } from './admin/admin.component';
+import { TrainerComponent } from './trainer/trainer.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'trainer',
-    component: LoginComponent,
+    component: TrainerComponent,
     // canActivate: [RoleGuard],
     // data: { roles: ['TRAINER', 'ADMIN'] }
   },

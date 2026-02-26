@@ -50,3 +50,8 @@
     color: black;
     font-weight: 500;
 }
+
+.error-message {
+    color: red;
+    margin-bottom: 16px;
+}

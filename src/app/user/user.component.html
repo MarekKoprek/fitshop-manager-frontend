@@ -9,9 +9,9 @@
             </div>
 
             <div class="right-panel">
-                <div class="membership-top-card">
-                <mat-icon class="membership-icon">credit_card</mat-icon>
-                <span class="membership-name">{{ currentUser?.activeSubscription != null ? currentUser?.activeSubscription.name : "Brak karnetu" }}</span>
+                <div class="membership-top-card" (click)="onCurrentSubscriptionClick()">
+                    <mat-icon class="membership-icon">credit_card</mat-icon>
+                    <span class="membership-name">{{ currentUser?.activeSubscription != null ? currentUser?.activeSubscription.name : "Brak karnetu" }}</span>
                 </div>
 
             </div>
@@ -72,7 +72,7 @@
                                 </ul>
                                 </div>
                                 <div style="display: flex; width: 100%; justify-content: center; margin-top: auto;">
-                                    <button mat-raised-button color="primary" class="buy-button">Kup karnet</button>
+                                    <button mat-raised-button color="primary" class="buy-button" (click)="onSubscriptionDialog(membership)">Kup karnet</button>
                                 </div>
                             </mat-card>
                         </div>

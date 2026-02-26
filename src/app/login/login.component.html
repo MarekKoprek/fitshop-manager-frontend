@@ -3,6 +3,9 @@
     <h2>Logowanie</h2>
     <p>Zaloguj się do swojego konta</p>
 
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
     <form #loginForm="ngForm" (ngSubmit)="login()">
         <mat-form-field appearance="fill" class="full-width">
             <mat-label>Email</mat-label>
@@ -14,7 +17,7 @@
             <input matInput type="password" [(ngModel)]="password" name="password" required>
         </mat-form-field>
 
-        <button mat-raised-button color="primary" class="full-width login-button" [disabled]="loginForm.invalid">Zaloguj się</button>
+        <button mat-raised-button color="primary" class="full-width" [disabled]="loginForm.invalid">Zaloguj się</button>
     </form>
 
     <p class="register-text">

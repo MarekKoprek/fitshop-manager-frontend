@@ -11,6 +11,7 @@ import { AuthService } from '../service/auth.service';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  errorMessage: string = '';
 
   constructor(private api: ApiService, private router: Router, private authService: AuthService) {
     const currentUser = localStorage.getItem('user');
@@ -32,6 +33,7 @@ export class LoginComponent {
         },
         error: (err) => {
           console.error('Błąd logowania', err);
+          this.errorMessage = 'Nieprawidłowy email lub hasło';
         }
       });
   }

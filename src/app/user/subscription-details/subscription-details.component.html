@@ -1,0 +1,76 @@
+<form [formGroup]="form" class="dialog-container">
+
+  <div class="content-wrapper">
+
+    <div class="left-column">
+      <h3 class="card-title">{{ data.subscription.name }}</h3>
+      <p class="card-description">{{ data.subscription.description }}</p>
+      <p class="card-price">{{ data.subscription.amount }} PLN</p>
+
+      <ul class="card-features">
+        <li *ngFor="let detail of data.subscription.details">
+          <mat-icon class="feature-icon">check_circle</mat-icon>
+          {{ detail.description }}
+        </li>
+      </ul>
+    </div>
+
+    <mat-divider *ngIf="data.buy" vertical></mat-divider>
+
+    <div class="right-column" *ngIf="data.buy">
+
+      <div class="payment-buttons">
+        <button
+          mat-stroked-button
+          [color]="paymentMethod === 'card' ? 'primary' : undefined"
+          (click)="switchPaymentMethod('card')"
+        >
+          Karta
+        </button>
+
+        <button
+          mat-stroked-button
+          [color]="paymentMethod === 'blik' ? 'primary' : undefined"
+          (click)="switchPaymentMethod('blik')"
+        >
+          BLIK
+        </button>
+      </div>
+
+      <div class="form-section" [ngClass]="paymentMethod === 'blik' ? 'hidden' : ''">
+        <mat-form-field appearance="outline">
+          <mat-label>Numer karty</mat-label>
+          <input formControlName="cardNumber" matInput placeholder="1234 5678 9012 3456">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Data ważności</mat-label>
+          <input formControlName="cardExpiryDate" matInput placeholder="MM/YY">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CVV</mat-label>
+          <input formControlName="cardCvv" matInput placeholder="123">
+        </mat-form-field>
+      </div>
+
+      <div class="form-section" [ngClass]="paymentMethod === 'card' ? 'hidden' : ''">
+        <mat-form-field appearance="outline">
+          <mat-label>Kod BLIK</mat-label>
+          <input formControlName="blikCode" matInput placeholder="123456">
+        </mat-form-field>
+      </div>
+
+    </div>
+</div>
+
+  <div class="button-wrapper" *ngIf="data.buy">
+    <button mat-raised-button color="primary" class="buy-button" (click)="buy()" type="submit" [disabled]="form.invalid">
+      Kup karnet
+    </button>
+    <button mat-raised-button color="warn" class="buy-button" (click)="dialogRef.close()">
+      Anuluj
+    </button>
+  </div>
+
+</form>

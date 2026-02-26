@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { Router } from '@angular/router';
+import { SubscriptionDetailsComponent } from './subscription-details/subscription-details.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-user',
@@ -18,7 +20,7 @@ export class UserComponent {
 
   closestTrainingTitle: string = '';
 
-  constructor(private apiService: ApiService, private router: Router) { }
+  constructor(private apiService: ApiService, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.apiService.get<any>('get/auth/user').subscribe({
@@ -103,10 +105,10 @@ export class UserComponent {
     this.apiService.get<any>('get/own/trainings').subscribe({
       next: (res) => {
         console.log('Treningi klienta:', res);
-        this.participatingTrainings = res;
 
         const now = new Date();
         const upcomingTrainings = res.filter((training: any) => new Date(training.startDate) > now);
+        this.participatingTrainings = upcomingTrainings;
         if (upcomingTrainings.length > 0) {
           upcomingTrainings.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
           this.closestTrainingTitle = upcomingTrainings[0].title;
@@ -153,6 +155,34 @@ export class UserComponent {
   }
 
   onCurrentSubscriptionClick() {
-    console.log('Kliknięto na bieżący karnet');
+    const dialogRef = this.dialog.open(SubscriptionDetailsComponent, {
+      width: '25vw',
+      maxHeight: '80vh',
+      data: { 
+        subscription: this.currentUser?.activeSubscription,
+        buy: false
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog zamknięty z wynikiem:', result);
+      }
+    });
+  }
+
+  onSubscriptionDialog(subscription: any) {
+    const dialogRef = this.dialog.open(SubscriptionDetailsComponent, {
+      width: '40vw',
+      maxHeight: '80vh',
+      data: { 
+        subscription: subscription,
+        buy: true
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Dialog zamknięty z wynikiem:', result);
+      }
+    });
   }
 }
